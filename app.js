@@ -1,16 +1,20 @@
+// Railway-based Admin Panel Deployment
+// Prerequisites: Node.js environment and Express.js framework
+
 const express = require('express');
 const mysql = require('mysql2');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
+require('dotenv').config();
 
 // Database connection
 const db = mysql.createConnection({
-  host: 'autorack.proxy.rlwy.net',
-  user: 'root',
-  password: 'EqhJEIAllXoUBzJmJkcGmMcgjdXrSwPA',
-  database: 'railway',
-  port: 51844
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT
 });
 
 db.connect((err) => {
@@ -90,22 +94,6 @@ app.get('/viewPassword/:id', (req, res) => {
       res.send(`Password: ${results[0].password}`);
     } else {
       res.send('User not found.');
-    }
-  });
-});
-
-// CPU and RAM usage
-const os = require('os');
-app.get('/stats', (req, res) => {
-  const cpuUsage = os.loadavg();
-  const totalMem = os.totalmem();
-  const freeMem = os.freemem();
-  res.json({
-    cpu: cpuUsage,
-    memory: {
-      total: totalMem,
-      free: freeMem,
-      used: totalMem - freeMem
     }
   });
 });
