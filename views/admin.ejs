@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <h1>Welcome, Admin</h1>
+  <h2>User List</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Actions</th>
+    </tr>
+    <% users.forEach(user => { %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.username %></td>
+        <td>
+          <form action="/deleteUser" method="POST" style="display:inline;">
+            <input type="hidden" name="id" value="<%= user.id %>">
+            <button type="submit">Delete</button>
+          </form>
+          <a href="/viewPassword/<%= user.id %>">View Password</a>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+  <h2>Add User</h2>
+  <form action="/addUser" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+    <button type="submit">Add User</button>
+  </form>
+</body>
+</html>
