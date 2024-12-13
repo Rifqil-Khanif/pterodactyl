@@ -1,18 +1,20 @@
-# Base image for Node.js
-FROM node:18
+# Gunakan image Node.js terbaru
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Salin package.json dan package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy all other files
+# Salin semua file ke container
 COPY . .
 
-# Expose port 3000 for the app
+# Expose port
 EXPOSE 3000
 
-# Command to run the application
-CMD ["node", "app.js"]
+# Jalankan server
+CMD ["npm", "start"]
